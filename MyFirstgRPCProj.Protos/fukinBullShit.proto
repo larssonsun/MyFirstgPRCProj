@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option csharp_namespace = "MyFirstgRPCProj.Server";
+
+package fukinBullShit;
+
+service FukinBullShiter {
+    rpc FukU (FukWhoRequest) returns (FukedReply);
+}
+
+message FukWhoRequest {
+    string name = 1;
+    int32 age = 2;
+}
+
+message FukedReply {
+    string mesage = 1;
+}
+

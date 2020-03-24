@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- <Protobuf Include="..\MyFirstgRPCProj.Protos\greet.proto" GrpcServices="Client" />
+    <Protobuf Include="..\MyFirstgRPCProj.Protos\fukinBullShit.proto" GrpcServices="Client" /> -->
+    <Protobuf Include="..\MyFirstgRPCProj.Protos\*.proto" GrpcServices="Client" Link="Protos\%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Grpc.Tools" Version="2.27.0"/>
+    <PackageReference Include="Grpc.Net.Client" Version="2.27.0"/>
+    <PackageReference Include="Google.Protobuf" Version="3.11.4"/>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- <Protobuf Include="..\MyFirstgRPCProj.Protos\greet.proto" GrpcServices="Server" />
+    <Protobuf Include="..\MyFirstgRPCProj.Protos\fukinBullShit.proto" GrpcServices="Server" /> -->
+    <Protobuf Include="..\MyFirstgRPCProj.Protos\*.proto" GrpcServices="Server" Link="Protos\%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.24.0" />
+  </ItemGroup>
+
+</Project>
