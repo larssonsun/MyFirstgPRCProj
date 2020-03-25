@@ -4,7 +4,6 @@ using Grpc.Core;
 using Microsoft.Extensions.Logging;
 using Scetia.Source.Item;
 using System.Linq;
-using static Scetia.Source.Item.KindsReply.Types;
 using Google.Protobuf.WellKnownTypes;
 
 namespace MyFirstgRPCProj.Server
@@ -17,25 +16,25 @@ namespace MyFirstgRPCProj.Server
             _logger = logger;
         }
 
-        public static readonly IList<Kind> kinds = new List<Kind>
+        public static readonly IList<KindEntity> kinds = new List<KindEntity>
         {
-            new Kind
+            new KindEntity
             {
-                KindId = "11",
-                KindName = "结构材料",
-                CanConsign = true
+                KId = "11",
+                KName = "结构材料",
+                Cc = true
             },
-            new Kind
+            new KindEntity
             {
-                KindId = "12",
-                KindName = "市政道路",
-                CanConsign = false
+                KId = "12",
+                KName = "市政道路",
+                Cc = false
             },
-            new Kind
+            new KindEntity
             {
-                KindId = "13",
-                KindName = "节能材料",
-                CanConsign = true
+                KId = "13",
+                KName = "节能材料",
+                Cc = true
             },
         };
 
@@ -46,11 +45,29 @@ namespace MyFirstgRPCProj.Server
             {
                 Kinds =
                 {
-                    kinds.Select(x=>x)
+                    kinds.Select(x => new Kind{KindId = x.KId, KindName = x.KName, CanConsign = x.Cc})
                 }
             };
 
             return Task.FromResult(result);
         }
+
+        public override Task<BoolReply> SetKinds(KindsRequest request, Grpc.Core.ServerCallContext context)
+        {
+            request.Kinds.Any(x =>
+            {
+                kinds.Add(new KindEntity { KId = x.KindId, KName = x.KindName, Cc = x.CanConsign });
+                return false;
+            });
+
+            return Task.FromResult(new BoolReply { Result = true, TotalCount = kinds.Count });
+        }
+    }
+
+    public class KindEntity
+    {
+        public string KId { get; set; }
+        public string KName { get; set; }
+        public bool Cc { get; set; }
     }
 }

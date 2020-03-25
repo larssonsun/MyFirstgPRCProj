@@ -7,15 +7,24 @@ package scetiaItemSourceGet;
 
 service ScetiaItemSourceGetter {
     rpc GetKinds (google.protobuf.Empty) returns (KindsReply);
+    rpc SetKinds (KindsRequest) returns (BoolReply);
 }
 
 message KindsReply {
     repeated Kind kinds= 1;
-
-    message Kind {
-        string kindId = 1;
-        string kindName = 2;
-        bool canConsign = 3;
-    }
 }
 
+message KindsRequest {
+    repeated Kind kinds = 1;
+}
+
+message Kind {
+    string kindId = 1;
+    string kindName = 2;
+    bool canConsign = 3;
+}
+
+message BoolReply {
+    bool result = 1;
+    int32 totalCount = 2;
+}

@@ -30,13 +30,21 @@ namespace MyFirstgRPCProj.Client.Con
             // Console.WriteLine($"{reply.Mesage}");
 
             var client = new ScetiaItemSourceGetter.ScetiaItemSourceGetterClient(channel);
-            var reply = await client.GetKindsAsync(new Empty());
+            // var reply = await client.GetKindsAsync(new Empty());
+            // await channel.ShutdownAsync();
+            // reply.Kinds.Any(x =>
+            // {
+            //     Console.WriteLine($"{x.KindId}-{x.KindName}{(x.CanConsign ? string.Empty : "(不可收样)")}");
+            //     return false;
+            // });
+
+
+            var request = new KindsRequest();
+            request.Kinds.Add(new Kind { KindId = "21", KindName = "垃圾", CanConsign = false });
+            var reply = await client.SetKindsAsync(request);
             await channel.ShutdownAsync();
-            reply.Kinds.Any(x =>
-            {
-                Console.WriteLine($"{x.KindId}-{x.KindName}{(x.CanConsign ? string.Empty : "(不可收样)")}");
-                return false;
-            });
+            Console.WriteLine($"result：{reply.Result}. kindTotalCount：{reply.TotalCount}");
+
         }
     }
 }
