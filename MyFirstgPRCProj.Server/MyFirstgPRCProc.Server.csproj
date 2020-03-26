@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="Grpc.AspNetCore" Version="2.24.0" />
+    <PackageReference Include="NConsul.AspNetCore" Version="0.7.4" />
   </ItemGroup>
 
 </Project>

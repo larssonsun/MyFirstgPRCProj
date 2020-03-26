@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NConsul.AspNetCore;
 
 namespace MyFirstgRPCProj.Server
 {
@@ -17,6 +18,11 @@ namespace MyFirstgRPCProj.Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddGrpc();
+
+            services.AddConsul("http://localhost:8500")
+                .AddGRPCHealthCheck("localhost:5000")
+                .RegisterService("MyFirstgRPCMicroServ", "localhost", 5000
+                    , new[] { "test", "grpc" });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -31,6 +37,8 @@ namespace MyFirstgRPCProj.Server
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGrpcService<HealthCheckService>();
+                
                 endpoints.MapGrpcService<GreeterService>();
                 endpoints.MapGrpcService<FukinBullShiterService>();
                 endpoints.MapGrpcService<ScetiaItemSourceGetterService>();
