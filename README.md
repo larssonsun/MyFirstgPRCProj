@@ -1,2 +1,2 @@
-# MyFirstgPRCProj
-MyFirstgPRCProj
+# MyFirstgRPCProj
+MyFirstgRPCProj
