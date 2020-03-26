@@ -18,7 +18,7 @@ namespace MyFirstgRPCProj.Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddGrpc();
-
+            // TODO:relogin to Consul when all Consul nodes (server model) shutdhowned.
             services.AddConsul("http://localhost:8500")
                 .AddGRPCHealthCheck("localhost:5000")
                 .RegisterService("MyFirstgRPCMicroServ", "localhost", 5000
@@ -38,7 +38,7 @@ namespace MyFirstgRPCProj.Server
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGrpcService<HealthCheckService>();
-                
+
                 endpoints.MapGrpcService<GreeterService>();
                 endpoints.MapGrpcService<FukinBullShiterService>();
                 endpoints.MapGrpcService<ScetiaItemSourceGetterService>();

@@ -46,11 +46,23 @@ namespace MyFirstgRPCProj.Client.Con
             #region api-gateway inuse
 
             var serviceAddress = string.Empty;
+            var serviceName = "MyFirstgRPCMicroServ";
 
             using (var consulClient = new ConsulClient(option => option.Address = new Uri("http://localhost:8500")))
             {
-                var serviceName = "MyFirstgRPCMicroServ";
-                var services = await consulClient.Catalog.Service(serviceName);
+                // type 1
+                // var services = await consulClient.Catalog.Service(serviceName);
+                // if (services.Response.Length == 0)
+                // {
+                //     Console.WriteLine($"can not find the service \"{serviceName}\"");
+                //     return;
+                // }
+
+                // var service = services.Response[0];
+                // serviceAddress = $"http://{service.ServiceAddress}:{service.ServicePort}";
+
+                // type 2 health service
+                var services = await consulClient.Health.Service(serviceName, "test", true);
                 if (services.Response.Length == 0)
                 {
                     Console.WriteLine($"can not find the service \"{serviceName}\"");
@@ -58,7 +70,8 @@ namespace MyFirstgRPCProj.Client.Con
                 }
 
                 var service = services.Response[0];
-                serviceAddress = $"http://{service.ServiceAddress}:{service.ServicePort}";
+                serviceAddress = $"http://{service.Service.Address}:{service.Service.Port}";
+
                 Console.WriteLine($"service \"{serviceName}\" load succeed.");
             }
 
